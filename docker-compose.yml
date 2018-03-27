@@ -1,0 +1,15 @@
+version: '2.1'
+services:
+  nginx:
+    image: oprietop/nginx-acme-gcsfuse
+    environment:
+      TZ: /usr/share/zoneinfo/Europe/Madrid
+      DOMAIN: foo.bar
+      UPSTREAM: grafana:3000
+    ports:
+      - 80:80
+      - 443:443
+    volumes:
+      - ./certs:/certs
+  grafana:
+    image: grafana/grafana

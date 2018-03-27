@@ -38,13 +38,12 @@ echo "# Check and renew certificates"
 echo "# Copy certificates to nginx"
 "/root/.acme.sh"/acme.sh --install-cert -d ${DOMAIN} --key-file /etc/nginx/certs/privkey.pem --fullchain-file /etc/nginx/certs/fullchain.pem
 
-
 if [ -f "/etc/nginx/conf.d/default.conf" ]; then
-    echo "Rendering default.conf for DOMAIN=${DOMAIN} and UPSTREAM=${UPSTREAM}"
-    sed -e "s/\${DOMAIN}/${DOMAIN}/g" -e "s/\${UPSTREAM}/${UPSTREAM}/" /etc/nginx/conf.d/default.conf
+    echo "# Rendering default.conf for DOMAIN=${DOMAIN} and UPSTREAM=${UPSTREAM}"
+    sed -i'' "s/\${DOMAIN}/${DOMAIN}/g" /etc/nginx/conf.d/default.conf
+    sed -i'' "s/\${UPSTREAM}/${UPSTREAM}/" /etc/nginx/conf.d/default.conf
 fi
 
-# Check for the gcsfuse binary
 if which gcsfuse
 then
   echo "# Found a gcsfuse binary"
@@ -54,5 +53,5 @@ then
   fi
 fi
 
-# Launch nginx in the foreground
+echo "# Launch nginx in the foreground"
 /usr/sbin/nginx -g "daemon off;"
