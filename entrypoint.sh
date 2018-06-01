@@ -53,5 +53,9 @@ then
   fi
 fi
 
+# Create a nginx owned wevdab directory
+mkdir -p /usr/share/nginx/webdav
+chown nginx:nginx /usr/share/nginx/webdav
+
 echo "# Launch nginx in the foreground"
 /usr/sbin/nginx -g "daemon off;"
