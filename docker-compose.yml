@@ -6,6 +6,7 @@ services:
       TZ: /usr/share/zoneinfo/Europe/Madrid
       DOMAIN: foo.bar
       UPSTREAM: grafana:3000
+      HTPASSWD: admin:admin
     ports:
       - 80:80
       - 443:443

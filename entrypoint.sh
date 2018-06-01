@@ -3,6 +3,7 @@
 [ -z "${DOMAIN}" ] && echo "Missing DOMAIN env variable!"
 [ -z "${DOMAIN}" ] && exit 1
 [ -z "${UPSTREAM}" ] && UPSTREAM="upstream:3000"
+[ -z "${HTPASSWD}" ] && HTPASSWD='admin:admin'
 
 echo "Working for DOMAIN=${DOMAIN} and UPSTREAM=${UPSTREAM}"
 
@@ -32,8 +33,8 @@ else
     cp -vr "/root/.acme.sh/${DOMAIN}" /certs
 fi
 
-echo "# Check and renew certificates"
-"/root/.acme.sh"/acme.sh --cron --home "/root/.acme.sh"
+echo "# Print certificates"
+"/root/.acme.sh"/acme.sh --list
 
 echo "# Copy certificates to nginx"
 "/root/.acme.sh"/acme.sh --install-cert -d ${DOMAIN} --key-file /etc/nginx/certs/privkey.pem --fullchain-file /etc/nginx/certs/fullchain.pem
@@ -52,6 +53,14 @@ then
     which gcsfuse && gcsfuse -o allow_other --implicit-dirs "$BUCKET" /mnt
   fi
 fi
+
+USER=`echo $HTPASSWD | cut -d: -f1`
+PASS=`echo $HTPASSWD | cut -d: -f2`
+ENCPASS=`openssl passwd -apr1 $PASS`
+echo "# USER: ${USER} PASS: ${PASS} ENCPASS: ${ENCPASS}"
+HTPASSWD="${USER}:${ENCPASS}"
+echo "# Using '$HTPASSWD' in /etc/nginx/htpasswd"
+echo "$HTPASSWD" > /etc/nginx/htpasswd
 
 # Create a nginx owned wevdab directory
 mkdir -p /usr/share/nginx/webdav

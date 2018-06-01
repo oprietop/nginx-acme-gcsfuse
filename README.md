@@ -6,6 +6,7 @@ The images is made with some concrete purposes:
  * easy hardened tls  
  * only one upstream url  
  * configurable GCS mountpoint via bucket name, intended for usage in kubernetes clusters  
+ * configurable https access 
 
 ## Example  
 ```bash
@@ -14,6 +15,7 @@ docker run --detach \
   --env DOMAIN=foo.bar \
   --env UPSTREAM=backend:8080 \
   --env BUCKET=mybucket \
+  --env HTPASSWD=admin:admin \
   --publish 80:80 \
   --publish 443:443 \
   oprietop\nginx-acme-gcsfuse
