@@ -41,8 +41,8 @@ echo "# Copy certificates to nginx"
 
 if [ -f "/etc/nginx/conf.d/default.conf" ]; then
     echo "# Rendering default.conf for DOMAIN=${DOMAIN} and UPSTREAM=${UPSTREAM}"
-    sed -i'' "s/\${DOMAIN}/${DOMAIN}/g" /etc/nginx/conf.d/default.conf
-    sed -i'' "s/\${UPSTREAM}/${UPSTREAM}/" /etc/nginx/conf.d/default.conf
+    sed -i'' "s@\${DOMAIN}@${DOMAIN}@g" /etc/nginx/conf.d/default.conf
+    sed -i'' "s@\${UPSTREAM}@${UPSTREAM}@" /etc/nginx/conf.d/default.conf
 fi
 
 if which gcsfuse
