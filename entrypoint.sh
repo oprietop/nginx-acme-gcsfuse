@@ -38,7 +38,7 @@ echo "# Print certificates"
 "/root/.acme.sh"/acme.sh --list
 
 echo "# Copy certificates to nginx"
-"/root/.acme.sh"/acme.sh --install-cert -d ${DOMAIN} --key-file /etc/nginx/certs/privkey.pem --fullchain-file /etc/nginx/certs/fullchain.pem
+"/root/.acme.sh"/acme.sh --install-cert -d ${DOMAIN} --key-file /etc/nginx/certs/privkey.pem --fullchain-file /etc/nginx/certs/fullchain.pem --reloadcmd "nginx -s reload"
 
 if [ -f "/etc/nginx/conf.d/default.conf" ]; then
     echo "# Rendering default.conf for DOMAIN=${DOMAIN} and UPSTREAM=${UPSTREAM}"
