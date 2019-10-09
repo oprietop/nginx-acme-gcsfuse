@@ -26,6 +26,7 @@ fi
 if [ -d "/certs/${DOMAIN}" ]; then
     echo "# Backup certs found"
     cp -vr "/certs/${DOMAIN}" /root/.acme.sh
+    "/root/.acme.sh"/acme.sh --cron --home "/root/.acme.sh"
 else
     echo "# No backup certs found issuing a new one"
     "/root/.acme.sh"/acme.sh --issue -d ${DOMAIN} --standalone -d ${DOMAIN}
