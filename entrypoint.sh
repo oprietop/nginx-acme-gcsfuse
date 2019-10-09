@@ -40,6 +40,10 @@ echo "# Print certificates"
 echo "# Copy certificates to nginx"
 "/root/.acme.sh"/acme.sh --install-cert -d ${DOMAIN} --key-file /etc/nginx/certs/privkey.pem --fullchain-file /etc/nginx/certs/fullchain.pem --reloadcmd "nginx -s reload"
 
+#echo "# Create a crontab to maintain the cert updated"
+#echo '"/root/.acme.sh"/acme.sh --cron --home "/root/.acme.sh" && nginx -s reload' > /etc/cron.daily/renew.sh
+#chmod +x /etc/cron.daily/renew.sh
+
 if [ -f "/etc/nginx/conf.d/default.conf" ]; then
     echo "# Rendering default.conf for DOMAIN=${DOMAIN} and UPSTREAM=${UPSTREAM}"
     sed -i'' "s@\${DOMAIN}@${DOMAIN}@g" /etc/nginx/conf.d/default.conf
