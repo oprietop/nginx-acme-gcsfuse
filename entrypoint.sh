@@ -26,7 +26,6 @@ fi
 if [ -d "/certs/${DOMAIN}" ]; then
     echo "# Backup certs found"
     cp -vr "/certs/${DOMAIN}" /root/.acme.sh
-    "/root/.acme.sh"/acme.sh --cron --home "/root/.acme.sh"
 else
     echo "# No backup certs found issuing a new one"
     "/root/.acme.sh"/acme.sh --issue -d ${DOMAIN} --standalone -d ${DOMAIN}
@@ -36,6 +35,9 @@ fi
 
 echo "# Print certificates"
 "/root/.acme.sh"/acme.sh --list
+
+echo "# Renew certificate for ${DOMAIN}"
+"/root/.acme.sh"/acme.sh --renew -d ${DOMAIN}
 
 echo "# Copy certificates to nginx"
 "/root/.acme.sh"/acme.sh --install-cert -d ${DOMAIN} --key-file /etc/nginx/certs/privkey.pem --fullchain-file /etc/nginx/certs/fullchain.pem --reloadcmd "nginx -s reload"
