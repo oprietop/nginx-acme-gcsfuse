@@ -40,7 +40,7 @@ echo "# Renew certificate for ${DOMAIN}"
 "/root/.acme.sh"/acme.sh --renew -d ${DOMAIN}
 
 echo "# Copy certificates to nginx"
-"/root/.acme.sh"/acme.sh --install-cert -d ${DOMAIN} --key-file /etc/nginx/certs/privkey.pem --fullchain-file /etc/nginx/certs/fullchain.pem --reloadcmd "nginx -s reload"
+"/root/.acme.sh"/acme.sh --install-cert -d ${DOMAIN} --key-file /etc/nginx/certs/privkey.pem --fullchain-file /etc/nginx/certs/fullchain.pem
 
 #echo "# Create a crontab to maintain the cert updated"
 #echo '"/root/.acme.sh"/acme.sh --cron --home "/root/.acme.sh" && nginx -s reload' > /etc/cron.daily/renew.sh
