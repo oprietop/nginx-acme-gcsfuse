@@ -29,8 +29,6 @@ if [ -d "/certs/${DOMAIN}" ]; then
 else
     echo "# No backup certs found issuing a new one"
     "/root/.acme.sh"/acme.sh --issue -d ${DOMAIN} --standalone -d ${DOMAIN}
-    echo "# Creating a backup"
-    cp -vr "/root/.acme.sh/${DOMAIN}" /certs
 fi
 
 echo "# Print certificates"
@@ -38,6 +36,9 @@ echo "# Print certificates"
 
 echo "# Renew all certificates if needed"
 "/root/.acme.sh"/acme.sh --cron --home "/root/.acme.sh"
+
+echo "# Creating a backup"
+cp -vr "/root/.acme.sh/${DOMAIN}" /certs
 
 echo "# Copy certificates to nginx"
 "/root/.acme.sh"/acme.sh --install-cert -d ${DOMAIN} --key-file /etc/nginx/certs/privkey.pem --fullchain-file /etc/nginx/certs/fullchain.pem
