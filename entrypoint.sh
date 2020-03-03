@@ -36,8 +36,8 @@ fi
 echo "# Print certificates"
 "/root/.acme.sh"/acme.sh --list
 
-echo "# Renew certificate for ${DOMAIN}"
-"/root/.acme.sh"/acme.sh --renew -d ${DOMAIN}
+echo "# Renew all certificates if needed"
+"/root/.acme.sh"/acme.sh --cron --home "/root/.acme.sh"
 
 echo "# Copy certificates to nginx"
 "/root/.acme.sh"/acme.sh --install-cert -d ${DOMAIN} --key-file /etc/nginx/certs/privkey.pem --fullchain-file /etc/nginx/certs/fullchain.pem
